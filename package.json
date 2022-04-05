@@ -1,5 +1,5 @@
 {
-  "name": "@convex-magic-sdk/admin",
+  "name": "magic-sdk-admin-convex-compatible",
   "version": "1.4.0",
   "description": "Magic Authentication Admin Javascript SDK.",
   "author": "Magic Labs <team@magic.link>",
