@@ -62,6 +62,9 @@ var TokenModule = /** @class */ (function (_super) {
         tokenSigner = ec_recover_1.ecRecover(claim, proof).toLowerCase();
         // Recover the attachment signer
         attachmentSigner = ec_recover_1.ecRecover(attachment, parsedClaim.add).toLowerCase();
+        console.log(claimedIssuer);
+        console.log(tokenSigner);
+        console.log(attachmentSigner);
         // Assert the expected signer
         if (claimedIssuer !== tokenSigner || claimedIssuer !== attachmentSigner) {
             throw sdk_exceptions_1.createIncorrectSignerAddressError();

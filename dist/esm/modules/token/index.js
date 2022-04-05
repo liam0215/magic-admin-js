@@ -25,6 +25,9 @@ export class TokenModule extends BaseModule {
         tokenSigner = ecRecover(claim, proof).toLowerCase();
         // Recover the attachment signer
         attachmentSigner = ecRecover(attachment, parsedClaim.add).toLowerCase();
+        console.log(claimedIssuer);
+        console.log(tokenSigner);
+        console.log(attachmentSigner);
         // Assert the expected signer
         if (claimedIssuer !== tokenSigner || claimedIssuer !== attachmentSigner) {
             throw createIncorrectSignerAddressError();

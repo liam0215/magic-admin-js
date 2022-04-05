@@ -60,7 +60,8 @@
   "dependencies": {
     "base64-js": "^1.5.1",
     "ethereum-cryptography": "^1.0.1",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "text-encoding": "^0.7.0"
   },
   "husky": {
     "hooks": {
