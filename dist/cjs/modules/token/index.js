@@ -31,6 +31,7 @@ var __read = (this && this.__read) || function (o, n) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable prefer-destructuring */
 var base_module_1 = require("../base-module");
+var types_1 = require("../../types");
 var sdk_exceptions_1 = require("../../core/sdk-exceptions");
 var ec_recover_1 = require("../../utils/ec-recover");
 var parse_didt_1 = require("../../utils/parse-didt");
@@ -67,7 +68,7 @@ var TokenModule = /** @class */ (function (_super) {
         console.log(attachmentSigner);
         // Assert the expected signer
         if (claimedIssuer !== tokenSigner || claimedIssuer !== attachmentSigner) {
-            throw sdk_exceptions_1.createIncorrectSignerAddressError();
+            throw new sdk_exceptions_1.MagicAdminSDKError(types_1.ErrorCode.IncorrectSignerAddress, 'Claimed Issuer: ' + claimedIssuer + ' does not match the signer: ' + tokenSigner + '\n or ' + attachmentSigner);
         }
         var timeSecs = Math.floor(Date.now() / 1000);
         var nbfLeeway = 300; // 5 min grace period

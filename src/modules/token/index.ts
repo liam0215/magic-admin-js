@@ -1,12 +1,13 @@
 /* eslint-disable prefer-destructuring */
 import { BaseModule } from '../base-module';
-import { ParsedDIDToken } from '../../types';
+import { ParsedDIDToken, ErrorCode } from '../../types';
 import {
   createFailedRecoveringProofError,
   createIncorrectSignerAddressError,
   createTokenExpiredError,
   createMalformedTokenError,
   createTokenCannotBeUsedYetError,
+  MagicAdminSDKError,
 } from '../../core/sdk-exceptions';
 import { ecRecover } from '../../utils/ec-recover';
 import { parseDIDToken } from '../../utils/parse-didt';
@@ -41,7 +42,10 @@ export class TokenModule extends BaseModule {
     console.log(attachmentSigner);
     // Assert the expected signer
     if (claimedIssuer !== tokenSigner || claimedIssuer !== attachmentSigner) {
-      throw createIncorrectSignerAddressError();
+      throw new MagicAdminSDKError(
+        ErrorCode.IncorrectSignerAddress,
+        'Claimed Issuer: ' + claimedIssuer + ' does not match the signer: ' + tokenSigner + '\n or ' + attachmentSigner,
+      );
     }
 
     const timeSecs = Math.floor(Date.now() / 1000);

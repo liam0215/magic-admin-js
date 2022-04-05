@@ -1,6 +1,7 @@
 /* eslint-disable prefer-destructuring */
 import { BaseModule } from '../base-module';
-import { createIncorrectSignerAddressError, createTokenExpiredError, createMalformedTokenError, createTokenCannotBeUsedYetError, } from '../../core/sdk-exceptions';
+import { ErrorCode } from '../../types';
+import { createTokenExpiredError, createMalformedTokenError, createTokenCannotBeUsedYetError, MagicAdminSDKError, } from '../../core/sdk-exceptions';
 import { ecRecover } from '../../utils/ec-recover';
 import { parseDIDToken } from '../../utils/parse-didt';
 import { parsePublicAddressFromIssuer } from '../../utils/issuer';
@@ -30,7 +31,7 @@ export class TokenModule extends BaseModule {
         console.log(attachmentSigner);
         // Assert the expected signer
         if (claimedIssuer !== tokenSigner || claimedIssuer !== attachmentSigner) {
-            throw createIncorrectSignerAddressError();
+            throw new MagicAdminSDKError(ErrorCode.IncorrectSignerAddress, 'Claimed Issuer: ' + claimedIssuer + ' does not match the signer: ' + tokenSigner + '\n or ' + attachmentSigner);
         }
         const timeSecs = Math.floor(Date.now() / 1000);
         const nbfLeeway = 300; // 5 min grace period
