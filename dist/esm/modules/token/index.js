@@ -1,6 +1,6 @@
 /* eslint-disable prefer-destructuring */
 import { BaseModule } from '../base-module';
-import { createFailedRecoveringProofError, createIncorrectSignerAddressError, createTokenExpiredError, createMalformedTokenError, createTokenCannotBeUsedYetError, } from '../../core/sdk-exceptions';
+import { createIncorrectSignerAddressError, createTokenExpiredError, createMalformedTokenError, createTokenCannotBeUsedYetError, } from '../../core/sdk-exceptions';
 import { ecRecover } from '../../utils/ec-recover';
 import { parseDIDToken } from '../../utils/parse-didt';
 import { parsePublicAddressFromIssuer } from '../../utils/issuer';
@@ -21,15 +21,10 @@ export class TokenModule extends BaseModule {
         catch {
             throw createMalformedTokenError();
         }
-        try {
-            // Recover the token signer
-            tokenSigner = ecRecover(claim, proof).toLowerCase();
-            // Recover the attachment signer
-            attachmentSigner = ecRecover(attachment, parsedClaim.add).toLowerCase();
-        }
-        catch {
-            throw createFailedRecoveringProofError();
-        }
+        // Recover the token signer
+        tokenSigner = ecRecover(claim, proof).toLowerCase();
+        // Recover the attachment signer
+        attachmentSigner = ecRecover(attachment, parsedClaim.add).toLowerCase();
         // Assert the expected signer
         if (claimedIssuer !== tokenSigner || claimedIssuer !== attachmentSigner) {
             throw createIncorrectSignerAddressError();

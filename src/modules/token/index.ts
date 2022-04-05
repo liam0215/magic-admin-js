@@ -30,15 +30,11 @@ export class TokenModule extends BaseModule {
       throw createMalformedTokenError();
     }
 
-    try {
-      // Recover the token signer
-      tokenSigner = ecRecover(claim, proof).toLowerCase();
+    // Recover the token signer
+    tokenSigner = ecRecover(claim, proof).toLowerCase();
 
-      // Recover the attachment signer
-      attachmentSigner = ecRecover(attachment, parsedClaim.add).toLowerCase();
-    } catch {
-      throw createFailedRecoveringProofError();
-    }
+    // Recover the attachment signer
+    attachmentSigner = ecRecover(attachment, parsedClaim.add).toLowerCase();
 
     // Assert the expected signer
     if (claimedIssuer !== tokenSigner || claimedIssuer !== attachmentSigner) {

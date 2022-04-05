@@ -58,15 +58,10 @@ var TokenModule = /** @class */ (function (_super) {
         catch (_b) {
             throw sdk_exceptions_1.createMalformedTokenError();
         }
-        try {
-            // Recover the token signer
-            tokenSigner = ec_recover_1.ecRecover(claim, proof).toLowerCase();
-            // Recover the attachment signer
-            attachmentSigner = ec_recover_1.ecRecover(attachment, parsedClaim.add).toLowerCase();
-        }
-        catch (_c) {
-            throw sdk_exceptions_1.createFailedRecoveringProofError();
-        }
+        // Recover the token signer
+        tokenSigner = ec_recover_1.ecRecover(claim, proof).toLowerCase();
+        // Recover the attachment signer
+        attachmentSigner = ec_recover_1.ecRecover(attachment, parsedClaim.add).toLowerCase();
         // Assert the expected signer
         if (claimedIssuer !== tokenSigner || claimedIssuer !== attachmentSigner) {
             throw sdk_exceptions_1.createIncorrectSignerAddressError();
